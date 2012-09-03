@@ -16,7 +16,7 @@
 				
 				socket.on('new_image',function(data){
 					console.log('new_image',data);
-					$('#img').attr('src',data);
+					$('html').css("background-image", "url("+data+")");  
 				});
 
             });
@@ -26,6 +26,13 @@
         		margin: 0px;
         		padding: 0px;
         	}
+        	html { 
+				background: url(images/bg.jpg) no-repeat center center fixed; 
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+			}
         </style>
     </head>
     <body>
