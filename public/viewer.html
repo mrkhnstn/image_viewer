@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Image Viewer</title>
+        <script src="javascripts/jquery-1.7.1.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+        <script>
+            $(function() {
+				// setup socket
+				var socket = io.connect('http://'+window.location.host);
+
+				socket.on('connect',function(){
+				});
+				
+				socket.on('new_image',function(data){
+					console.log('new_image',data);
+					$('#img').attr('src',data);
+				});
+
+            });
+        </script> 
+        <style>
+        	body {
+        		margin: 0px;
+        		padding: 0px;
+        	}
+        </style>
+    </head>
+    <body>
+    	<div><img id='img'></img></div>
+    </body>
+</html>
