@@ -62,13 +62,30 @@ server.listen(app.get('port'), function(){
 		io.disable('log');
 	});
 
+	function refresh(){
+		try{
+			//console.log('refresh');
+			var files = fs.readdirSync(imageFolder);
+			//console.log(files[files.length-1]);
+			io.sockets.emit('new_image','images/' + files[files.length-1]);
+		} catch (e){
+			console.log('error refresh');
+		}
+	}
+
 	sockets = io.on('connection', function (socket) {
-		var files = fs.readdirSync(imageFolder);
-		socket.emit('new_image','images/' + files[files.length-1]);
+		console.log('connection');
+		try{
+			//console.log('refresh');
+			var files = fs.readdirSync(imageFolder);
+			//console.log(files[files.length-1]);
+			io.sockets.emit('new_image','images/' + files[files.length-1]);
+		} catch (e){
+			console.log('error refresh');
+		}
 	});
 	
-	fs.watch('public/images', function (event, filename) {
-		var files = fs.readdirSync(imageFolder);
-		io.sockets.emit('new_image','images/' + files[files.length-1]);
+	fs.watch(imageFolder, function (event, filename) {
+		refresh();
 	});
 });
